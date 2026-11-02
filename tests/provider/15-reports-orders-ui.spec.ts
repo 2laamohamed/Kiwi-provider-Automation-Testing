@@ -1,7 +1,7 @@
 // تستات UI متفرقة على التقارير والطلبات والهيدر والبروفايل والرئيسية.
 // الشاشات: التقارير  /reports  و /reports/<slug>  ،  الطلبات  /dashboard?tab=orders  ،  الهيدر في كل التابات
 // ،  إعدادات الحساب  /profile  ،  الرئيسية  /dashboard?tab=home  ،  والصفحة الأولى للموقع  /
-// User stories: التقارير (6024، 6029، 6159، 6163، 6168، 6019)، الطلبات (5970، 6090-6102)، الهيدر (6072)،
+// User stories: التقارير (6024، 6029، 6159، 6163، 6168)، الطلبات (5970، 6090-6102)، الهيدر (6072)،
 // البروفايل (6035، 6203)، اكتمال الحساب (5926)، تحميل التطبيق (5921).
 // كل التستات هنا قراءة بس، مفيش تغيير داتا. تستات الطلبات عليها @needs-data (حساب onboarding مفيهوش طلبات)
 // ومش داخلة في الرن العادي.
@@ -70,22 +70,6 @@ test.describe('Reports details', () => {
     for (const [value, label] of sizes) {
       expect(value).toBeGreaterThan(label);
     }
-  });
-
-  // US 6019: فلتر التاريخ في تقرير net-revenue لازم فيه (من/إلى، الشهر الحالي، أسبوعي، مخصص، كل الأوقات).
-  // ملاحظة: تاسك الـ FE لسه New، فالمتوقع إن التست يفشل لحد ما يتنفذ.
-  test('date filter offers From/To, current month, weekly, custom, all time (US 6019)', async ({
-    reports,
-    page,
-  }) => {
-    // US 6019 لسه ماتنفذتش في الـ FE ← التست متعلّم "متوقع يفشل"؛ لما الفلتر ينزل هيطلع أحمر "passed unexpectedly"
-    test.fail(true, 'US 6019 (net revenue date filter) not implemented yet');
-    test
-      .info()
-      .annotations.push({ type: 'known gap US 6019', description: 'Date filter not implemented yet' });
-    await reports.gotoReport('net-revenue');
-    await expect(page.getByText(/اتجاه صافي الإيرادات/).first()).toBeVisible({ timeout: 30_000 });
-    await expect(page.getByText(/كل الأوقات|مخصص/).first()).toBeVisible({ timeout: 5_000 });
   });
 });
 

@@ -102,15 +102,13 @@ A couple of things that are good to know:
 ## Reading the results
 
 - ✅ **Passed**: all good.
-- 🐞 **Known bugs (expected to fail):** these are marked with `test.fail()` and count as passed while the bug is still there. They're listed at the end of every run.
+- 🐞 **Known bug (expected to fail):** it's marked with `test.fail()` and counts as passed while the bug is still there. It's listed at the end of every run.
 
   | Bug | Where | What's wrong |
   |---|---|---|
-  | **M11** | `01-auth` | After logout, the old token still works on the API (200 instead of 401). |
-  | **US 6019** | `15-reports-orders-ui` | The net-revenue date filter isn't implemented yet. |
   | **L4** | onboarding, add-service dialog | Under "مجموعة الخدمات" the error says "فئة العمل مطلوبة". |
 
-  Once a bug is fixed, its test turns red with **"passed unexpectedly"**. That's good news: just delete that `test.fail()` line.
+  Once it's fixed, the test turns red with **"passed unexpectedly"**. That's good news: just delete that `test.fail()` line.
 
 - ⏭️ **Skipped:** the reason is printed at the end of the run. Right now staging has **only the free plan**, so the checks that need a paid plan are skipped. They'll run again as soon as paid plans are back.
 - 🟡 **Flaky:** a test failed once and passed on the automatic retry. On staging that's almost always a short network drop.
@@ -164,4 +162,4 @@ npm run auth:provider    # force a fresh login
 2. التشغيل من غير ما المتصفح يفتح: `npm run test:headless`. ولو عايز تتفرج على المتصفح وهو شغال: `npm run test:all`.
 3. التقرير: `npm run report`.
 4. كل رن بيعمل حساب بروفايدر جديد وداتا جديدة، وتستات البروفايدر بتكمّل على الحساب ده.
-5. البجز المعروفة (M11 و US 6019 و L4) بتتحسب ناجحة لحد ما تتصلح. والتستات اللي عليها skip مكتوب سببها في آخر الرن.
+5. الباج المعروف (L4) بيتحسب ناجح لحد ما تتصلح. والتستات اللي عليها skip مكتوب سببها في آخر الرن.

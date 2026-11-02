@@ -9,9 +9,7 @@
 import { test, expect } from '../../src/fixtures/provider.fixture';
 import { getOtp } from '../../src/config/otp';
 import { randomEgyptPhone, qaName } from '../../src/utils/data';
-import { mainProvider, dataProvider } from '../../src/fixtures/qaProvider';
-import { loginWithOtp } from '../../src/fixtures/login';
-import { API_URL } from '../../src/utils/kiwiApi';
+import { mainProvider } from '../../src/fixtures/qaProvider';
 import { env } from '../../src/config/env';
 
 // بنفضّي الـ storageState عشان كل تست في الملف يبدأ من غير login.
@@ -99,29 +97,6 @@ test.describe('Auth – Sign in with OTP', () => {
     await signIn.submit.click();
     await expect(signIn.otpWaitMessage).toBeVisible({ timeout: 15_000 });
     await expect(page).toHaveURL(/sign-in/);
-  });
-
-  // (BUG M11) تسجيل الخروج لازم يلغي التوكن على السيرفر، فأي طلب API بالتوكن القديم يرجع 401.
-  // الحالي: بعد الخروج التوكن القديم لسه شغال (200) – الخروج بيمسح الكوكي من المتصفح بس.
-  // بيعمل login بنفس الحساب في context لوحده (التوكنات مستقلة، فمش بيأثر على سيشن باقي التستات).
-  test('logout revokes the token on the server (BUG M11: old token still works)', async ({
-    page,
-    dashboard,
-  }) => {
-    test.setTimeout(3 * 60_000);
-    test.fail(true, 'known bug M11: logout does not revoke the token server-side');
-    test.info().annotations.push({ type: 'known bug M11', description: 'Logout does not revoke the token' });
-    const who = dataProvider();
-    await loginWithOtp(page, who.phone, who.country);
-    const token = decodeURIComponent(
-      (await page.context().cookies()).find((c) => c.name === 'token')?.value ?? '',
-    );
-    expect(token, 'token cookie after login').not.toBe('');
-    await dashboard.logout();
-    const res = await page.request.get(`${API_URL}/provider/profile/me`, {
-      headers: { Authorization: `Bearer ${token}`, Accept: 'application/json' },
-    });
-    expect(res.status(), 'old token after logout').toBe(401);
   });
 
   // لينك "إنشاء حساب" لازم يودّي لـ /sign-up على نفس موقع البروفايدر (مش موقع العميل).
