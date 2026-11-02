@@ -1,0 +1,31 @@
+{
+  "name": "kiwi-automation-testing",
+  "version": "1.0.0",
+  "private": true,
+  "description": "KIWI Business Owner (Provider) website – end-to-end automation with Playwright + TypeScript: onboarding a new provider from zero + all provider screens.",
+  "scripts": {
+    "setup": "npm ci && npx playwright install chromium",
+    "test:onboarding": "playwright test --project=onboarding",
+    "test:provider": "playwright test --project=provider",
+    "test:all": "playwright test --project=onboarding && playwright test --project=provider",
+    "test:headed": "playwright test --project=onboarding && playwright test --project=provider",
+    "test:onboarding:headless": "cross-env HEADLESS=true playwright test --project=onboarding",
+    "test:provider:headless": "cross-env HEADLESS=true playwright test --project=provider",
+    "test:headless": "cross-env HEADLESS=true playwright test --project=onboarding && cross-env HEADLESS=true playwright test --project=provider",
+    "test:smoke": "playwright test --project=provider --grep @smoke",
+    "test:needs-data": "playwright test --project=provider --grep @needs-data",
+    "test:destructive": "cross-env RUN_DESTRUCTIVE=true playwright test --project=provider --grep @destructive",
+    "test:ui": "playwright test --ui",
+    "report": "playwright show-report",
+    "auth:provider": "node -e \"for (const f of ['.auth/provider.json','.auth/provider-booking.json']) { try { require('fs').unlinkSync(f) } catch {} }\" && playwright test --project=provider-setup",
+    "typecheck": "tsc --noEmit",
+    "install:browsers": "playwright install chromium"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1",
+    "@types/node": "^22.10.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
+    "typescript": "6.0.3"
+  }
+}
